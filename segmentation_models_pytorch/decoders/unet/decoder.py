@@ -22,7 +22,7 @@ class DecoderBlock(nn.Module):
             padding=1,
             use_batchnorm=use_batchnorm,
         )
-        self.reduction = 8
+        self.reduction = 2
         print(f'DecoderBlock; reduction: {self.reduction}')
         self.attention1 = md.Attention(attention_type, in_channels=in_channels + skip_channels, reduction=self.reduction)
         self.conv2 = md.Conv2dReLU(
