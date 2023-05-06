@@ -61,8 +61,8 @@ class SCSEModule(nn.Module):
         print(f'SCSEModule(); reduction: {reduction}')
 
     def forward(self, x):
-        # return x * self.cSE(x) + x * self.sSE(x)
-        return torch.cat([x * self.cSE(x), x * self.sSE(x)], dim=1)
+        return x * self.cSE(x) + x * self.sSE(x)
+        # return torch.cat([x * self.cSE(x), x * self.sSE(x)], dim=1)
 
 
 class ArgMax(nn.Module):
