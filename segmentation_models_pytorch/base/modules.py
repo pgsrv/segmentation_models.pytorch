@@ -50,35 +50,39 @@ class Conv2dReLU(nn.Sequential):
 class SCSEModule(nn.Module):
     def __init__(self, in_channels, reduction=16):
         super().__init__()
-        '''
+        # '''
         self.cSE = nn.Sequential(
-            nn.AdaptiveAvgPool2d(1),
-            nn.Conv2d(in_channels, in_channels // reduction, 1),
+            # nn.AdaptiveAvgPool2d(1),
+            # nn.Conv2d(in_channels, in_channels // reduction, 1),
+            nn.Conv2d(in_channels, in_channels // reduction, 3, 1),
             nn.ReLU(inplace=True),
             # nn.Conv2d(in_channels // reduction, in_channels, 1),
             nn.Sigmoid(),
         )
-        self.sSE = nn.Sequential(nn.Conv2d(in_channels, 1, 1), nn.Sigmoid())
-        print(f'SCSEModule(); in_channels: {in_channels}, reduction: {reduction}')
-        '''
+        # self.sSE = nn.Sequential(nn.Conv2d(in_channels, 1, 1), nn.Sigmoid())
+        self.sSE = nn.Sequential(nn.Conv2d(in_channels, 1, 3, 1), nn.Sigmoid())
+        # print(f'SCSEModule(); in_channels: {in_channels}, reduction: {reduction}')
+        # '''
 
+        '''
         self.lst = nn.ModuleList([
             nn.Sequential(
                 nn.Conv2d(dim, dim, kernel_size=3, padding=1),
                 nn.ReLU(inplace=True),
             ) for dim in [64, 64, 128, 256, 512]
         ])
+        '''
 
     def forward(self, x):
         # print(f'SCSEModule.forward(); x.dtype: {x.dtype}, x.shape: {x.shape}')
 
-        # a = self.cSE(x)
-        # b = self.sSE(x)
+        a = self.cSE(x)
+        b = self.sSE(x)
         # print(f'SCSEModule.forward(); cSE(x).dtype: {a.dtype}, cSE(x).shape: {a.shape}')
         # print(f'SCSEModule.forward(); sSE(x).dtype: {b.dtype}, sSE(x).shape: {b.shape}')
 
-        # res = x * a + x * b
-        res = self.lst(x)
+        res = x * a + x * b
+        # res = self.lst(x)
 
         # print(f'SCSEModule.forward(); res.dtype: {res.dtype}, res.shape: {res.shape}')
 
