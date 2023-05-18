@@ -61,8 +61,17 @@ class SCSEModule(nn.Module):
         print(f'SCSEModule(); in_channels: {in_channels}, reduction: {reduction}')
 
     def forward(self, x):
-        res = x * self.cSE(x) + x * self.sSE(x)
+        print(f'SCSEModule.forward(); x.dtype: {x.dtype}, x.shape: {x.shape}')
+
+        a = self.cSE(x)
+        b = self.sSE(x)
+        print(f'SCSEModule.forward(); cSE(x).dtype: {a.dtype}, cSE(x).shape: {a.shape}')
+        print(f'SCSEModule.forward(); sSE(x).dtype: {b.dtype}, sSE(x).shape: {b.shape}')
+
+        res = x * a + x * b
+
         print(f'SCSEModule.forward(); res.dtype: {res.dtype}, res.shape: {res.shape}')
+
         # return torch.cat([x * self.cSE(x), x * self.sSE(x)], dim=1)
         return res
 
