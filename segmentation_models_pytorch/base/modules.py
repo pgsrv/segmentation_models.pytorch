@@ -61,7 +61,8 @@ class SCSEModule(nn.Module):
         print(f'SCSEModule(); reduction: {reduction}')
 
     def forward(self, x):
-        return x * self.cSE(x) + x * self.sSE(x)
+        res = x * self.cSE(x) + x * self.sSE(x)
+        print(f'SCSEModule.forward(); res.dtype: {res.dtype}, res.shape: {res.shape}')
         # return torch.cat([x * self.cSE(x), x * self.sSE(x)], dim=1)
 
 
