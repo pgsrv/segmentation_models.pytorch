@@ -52,7 +52,7 @@ class SCSEModule(nn.Module):
         super().__init__()
         # '''
         self.cSE = nn.Sequential(
-            # nn.AdaptiveAvgPool2d(1),
+            nn.AdaptiveAvgPool2d(1),
             # nn.Conv2d(in_channels, in_channels // reduction, 1),
             nn.Conv2d(in_channels, in_channels // reduction, 1),
             nn.ReLU(inplace=True),
