@@ -58,12 +58,13 @@ class SCSEModule(nn.Module):
             nn.Sigmoid(),
         )
         self.sSE = nn.Sequential(nn.Conv2d(in_channels, 1, 1), nn.Sigmoid())
-        print(f'SCSEModule(); reduction: {reduction}')
+        print(f'SCSEModule(); in_channels: {in_channels}, reduction: {reduction}')
 
     def forward(self, x):
         res = x * self.cSE(x) + x * self.sSE(x)
         print(f'SCSEModule.forward(); res.dtype: {res.dtype}, res.shape: {res.shape}')
         # return torch.cat([x * self.cSE(x), x * self.sSE(x)], dim=1)
+        return res
 
 
 class ArgMax(nn.Module):
