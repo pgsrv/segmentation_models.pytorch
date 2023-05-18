@@ -61,7 +61,7 @@ class SCSEModule(nn.Module):
         print(f'SCSEModule(); in_channels: {in_channels}, reduction: {reduction}')
 
     def forward(self, x):
-        print(f'SCSEModule.forward(); x.dtype: {x.dtype}, x.shape: {x.shape}')
+        # print(f'SCSEModule.forward(); x.dtype: {x.dtype}, x.shape: {x.shape}')
 
         a = self.cSE(x)
         b = self.sSE(x)
