@@ -54,7 +54,7 @@ class SCSEModule(nn.Module):
             nn.AdaptiveAvgPool2d(1),
             nn.Conv2d(in_channels, in_channels // reduction, 1),
             nn.ReLU(inplace=True),
-            nn.Conv2d(in_channels // reduction, in_channels, 1),
+            # nn.Conv2d(in_channels // reduction, in_channels, 1),
             nn.Sigmoid(),
         )
         self.sSE = nn.Sequential(nn.Conv2d(in_channels, 1, 1), nn.Sigmoid())
@@ -65,12 +65,12 @@ class SCSEModule(nn.Module):
 
         a = self.cSE(x)
         b = self.sSE(x)
-        print(f'SCSEModule.forward(); cSE(x).dtype: {a.dtype}, cSE(x).shape: {a.shape}')
-        print(f'SCSEModule.forward(); sSE(x).dtype: {b.dtype}, sSE(x).shape: {b.shape}')
+        # print(f'SCSEModule.forward(); cSE(x).dtype: {a.dtype}, cSE(x).shape: {a.shape}')
+        # print(f'SCSEModule.forward(); sSE(x).dtype: {b.dtype}, sSE(x).shape: {b.shape}')
 
         res = x * a + x * b
 
-        print(f'SCSEModule.forward(); res.dtype: {res.dtype}, res.shape: {res.shape}')
+        # print(f'SCSEModule.forward(); res.dtype: {res.dtype}, res.shape: {res.shape}')
 
         # return torch.cat([x * self.cSE(x), x * self.sSE(x)], dim=1)
         return res
